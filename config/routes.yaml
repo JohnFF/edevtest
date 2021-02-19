@@ -26,7 +26,7 @@ app_electroneum_api_user_closeacc:
     controller: App\Controller\Api\User\CloseAcc::close_acc
 
 app_electroneum_api_user_register:
-    path: /api/user/signout
+    path: /api/user/register
     controller: App\Controller\Api\User\Register::register
 
 app_electroneum_api_user_update:

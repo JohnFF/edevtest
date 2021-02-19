@@ -49,4 +49,11 @@ class Authenticator {
         start_session();
         session_destroy();
     }
+
+    /**
+     *
+     */
+    public static function verify_user_logged_in() {
+        // TODO
+    }
 }
