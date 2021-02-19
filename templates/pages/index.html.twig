@@ -1,19 +1,24 @@
 <html>
-<head>
-<script>
-function login() {
-    var xmlhttp = new XMLHttpRequest();
-
-
-xmlhttp.open("GET", "api/authentication/authenticate.php", true);    xmlhttp.send(); 
-window.location.replace("/dashboard.php");
-
- }
-</script>
-</head>
+    <head>
+        <script>
+            function register() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET", "api/auth/register", true);
+                xmlhttp.send();
+                //window.location.replace("/dashboard.php");
+             }
+            function login() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET", "api/auth/signin", true);
+                xmlhttp.send();
+                //window.location.replace("/dashboard.php");
+             }
+        </script>
+    </head>
 <body>
 Username <input id="username_field" type="text"></input>
 Password <input id="password_field" type="text"></input>
+<input id="login_button" type="button" value="Register" onclick="register()"></type>
 <input id="login_button" type="button" value="Log in" onclick="login()"></type>
 </body>
 </html>
