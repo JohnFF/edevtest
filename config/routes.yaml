@@ -2,6 +2,7 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
+# Pages
 app_electroneum_index:
     path: /
     controller: App\Controller\Pages\Index::show
@@ -9,3 +10,25 @@ app_electroneum_index:
 app_electroneum_dashboard:
     path: /dashboard
     controller: App\Controller\Pages\Dashboard::show
+
+# Authentication API
+app_electroneum_api_auth_signin:
+    path: /api/auth/signin
+    controller: App\Controller\Api\Auth\SignIn::sign_in
+
+app_electroneum_api_auth_signout:
+    path: /api/auth/signout
+    controller: App\Controller\Api\Auth\SignOut::sign_out
+
+# User API
+app_electroneum_api_user_closeacc:
+    path: /api/user/closeacc
+    controller: App\Controller\Api\User\CloseAcc::close_acc
+
+app_electroneum_api_user_register:
+    path: /api/user/signout
+    controller: App\Controller\Api\User\Register::register
+
+app_electroneum_api_user_update:
+    path: /api/user/update
+    controller: App\Controller\Api\User\Update::update
