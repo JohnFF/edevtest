@@ -32,7 +32,7 @@ class UserFactory {
         $userDetails = [
             'username' => $username,
             'first_name' => $firstName,
-            'password' => $passwordHash,
+            'password_hash' => $passwordHash,
         ];
 
         // TODO check file doesn't exist first.
