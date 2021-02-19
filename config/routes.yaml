@@ -1,3 +1,11 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+app_electroneum_index:
+    path: /
+    controller: App\Controller\Pages\Index::show
+    
+app_electroneum_dashboard:
+    path: /dashboard
+    controller: App\Controller\Pages\Dashboard::show
