@@ -3,6 +3,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
+       /**
+        * User clicks the register button.
+        */
         $("#register_button").click(function(){
             $.post("api/user/register",
             {
@@ -16,13 +19,23 @@
 
             //window.location.replace("/dashboard.php");
         });
+
+       /**
+        * User clicks the sign in button.
+        */
+        $("#sign_in_button").click(function(){
+            $.post("api/auth/signin",
+            {
+                username: $("#username_field").val(),
+                password: $("#password_field").val(),
+            },
+            function(data, status){
+              alert("Data: " + data + "\nStatus: " + status);
+            });
+
+            //window.location.replace("/dashboard.php");
+        });
     });
-            function login() {
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.open("GET", "api/auth/signin", true);
-                xmlhttp.send();
-                //window.location.replace("/dashboard.php");
-             }
         </script>
     </head>
 <body>
@@ -30,7 +43,7 @@ Username <input id="username_field" type="text"></input>
 First name <input id="first_name_field" type="text"></input>
 Password <input id="password_field" type="text"></input>
 <input id="register_button" type="button" value="Register"></type>
-<input id="login_button" type="button" value="Log in" onclick="login()"></type>
+<input id="sign_in_button" type="button" value="Sign in"></type>
 </body>
 </html>
 

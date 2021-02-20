@@ -2,6 +2,8 @@
 
 namespace App\Electroneum;
 
+use App\Electroneum\UserLoader;
+
 /**
  * Handles the creation and deletion of users.
  */
@@ -47,6 +49,12 @@ class UserFactory {
      * @param string $password
      */
     public static function delete_user($username, $password) {
-        // TODO
+
+        // A near identical function could be made to see if the password matches
+        // the user, but as that would be mostly duplication, it's better to
+        // just attempt a load.
+        UserLoader::load_user($username, $password);
+
+        unlink(self::STORAGE_FILEPATH . $username . self::STORAGE_FILETYPE);
     }
 }

@@ -10,24 +10,11 @@
                     });
                 });
             });
-            $(document).ready(function(){
-                $("#close_account_button").click(function(){
-                    $.post("/api/user/closeacc",
-                    {
-                        username: $("#username_field").val(),
-                        password: $("#password_field").val(),
-                    },
-                    function(data, status){
-                        window.location.replace("/");
-                    });
-                });
-            });
         </script>
     </head>
 <body>
-    Hello {{ user.first_name }}!
+    {{ error_message }}
     <input id="sign_out_button" type="button" value="Sign Out"></type>
-    <input id="close_account_button" type="button" value="Close Account"></type>
 Password <input id="password_field" type="text"></input>
 </body>
 </html>
