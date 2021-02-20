@@ -7,6 +7,41 @@ use App\Electroneum\Validator;
 
 final class EmailTest extends TestCase
 {
+    private function verify_invalid_values_generic($invalidValues, $validationFunction) {
+        $caughtExceptions = 0;
+
+        // $this->fail used to not throw Exception. It seems now it does.
+        // Way to circumvent this is to throw specific types of Exception for
+        // validation fails but for this project that would be overkill.
+        $allFailedValidation = TRUE;
+
+        foreach ($invalidValues as $eachInvalidValue) {
+            try {
+                call_user_func($validationFunction, $eachInvalidValue);
+                $allFailedValidation = FALSE;
+            }
+            catch (Exception $exception) {
+                $caughtExceptions++;
+            }
+        }
+
+        $this->assertTrue($allFailedValidation);
+        $this->assertEquals(count($invalidValues), $caughtExceptions);
+    }
+
+    private function verify_valid_values_generic($validValues, $validationFunction) {
+        try {
+            foreach ($validValues as $eachvalidValue) {
+                Validator::verify_password_valid($eachValidValue);
+            }
+        }
+        catch (Exception $exception) {
+            $allPassedValidation = FALSE;
+        }
+
+        $this->assertTrue($allPassedValidation, 'A valid username failed validation: ' . $eachvalidValue);
+    }
+
     public function test_verify_username_valid_invalid_values() {
 
         $invalidValues = [
@@ -19,26 +54,7 @@ final class EmailTest extends TestCase
             'no space allowed',
         ];
 
-        $caughtExceptions = 0;
-
-        // $this->fail used to not throw Exception. It seems now it does.
-        // Way to circumvent this is to throw specific types of Exception for
-        // validation fails but for this project that would be overkill.
-        $allFailedValidation = TRUE;
-
-        foreach ($invalidValues as $eachInvalidValue) {
-            try {
-                Validator::verify_password_valid($eachInvalidValue);
-                $allFailedValidation = FALSE;
-            }
-            catch (Exception $exception) {
-                $caughtExceptions++;
-            }
-        }
-
-        $this->assertTrue($allFailedValidation);
-        $this->assertEquals(count($invalidValues), $caughtExceptions);
-
+        $this->verify_invalid_values_generic($invalidValues, array('App\\Electroneum\\Validator', 'verify_username_valid'));
     }
 
     public function test_verify_username_valid_valid_values() {
@@ -48,16 +64,7 @@ final class EmailTest extends TestCase
             'AllTheTests',
         );
 
-        try {
-            foreach ($validValues as $eachvalidValue) {
-                Validator::verify_password_valid($eachValidValue);
-            }
-        }
-        catch (Exception $exception) {
-            $allPassedValidation = FALSE;
-        }
-
-        $this->assertTrue($allPassedValidation, 'A valid username failed validation: ' . $eachvalidValue);
+        $this->verify_valid_values_generic($validValues, array('App\\Electroneum\\Validator', 'verify_username_valid'));
     }
 
     public function test_verify_password_valid_invalid_values() {
@@ -72,42 +79,15 @@ final class EmailTest extends TestCase
             '_Invalidreallylongpasswordinvalidreallylongpassword',
         ];
 
-        $caughtExceptions = 0;
-
-        // $this->fail used to not throw Exception. It seems now it does.
-        // Way to circumvent this is to throw specific types of Exception for
-        // validation fails but for this project that would be overkill.
-        $allFailedValidation = TRUE;
-
-        foreach ($invalidValues as $eachInvalidValue) {
-            try {
-                Validator::verify_password_valid($eachInvalidValue);
-                $allFailedValidation = FALSE;
-            }
-            catch (Exception $exception) {
-                $caughtExceptions++;
-            }
-        }
-
-        $this->assertTrue($allFailedValidation);
-        $this->assertEquals(count($invalidValues), $caughtExceptions);
-
+        $this->verify_invalid_values_generic($invalidValues, array('App\\Electroneum\\Validator', 'verify_password_valid'));
     }
 
     public function test_verify_password_valid_valid_values() {
         $validValues = array(
             'Valid_Password1',
+            'Another_Valid_Password1',
         );
 
-        try {
-            foreach ($validValues as $eachvalidValue) {
-                Validator::verify_password_valid($eachValidValue);
-            }
-        }
-        catch (Exception $exception) {
-            $allPassedValidation = FALSE;
-        }
-
-        $this->assertTrue($allPassedValidation, 'A valid password failed validation: ' . $eachvalidValue);
+        $this->verify_valid_values_generic($validValues, array('App\\Electroneum\\Validator', 'verify_password_valid'));
     }
 }
