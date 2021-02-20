@@ -2,7 +2,6 @@
 - Opted not to use certain symfony components to demonstrate ability to build.
 - This may seem like a contradiction, but I wanted to demonstrate range and good understanding of the concepts involved.
 
-
 2. I use the word "verify" to name functions that don't return a value, they just throw an exception when non-compliant.
 
 3. Decided to store account credentials in json text files for a) ease and b) because my CRM experience shows I can do databases and c) I wanted to do something distinctly distinct. Keep them out of the web root!
@@ -22,3 +21,7 @@ This is part of the Drupal standards because if you add an entry you only change
 
 10. Use the validation rule constants from the engine for the interface as well by passing them as Twig variables. This ensures there are never discrepancis between front end and back end validation.
 The other alterntive would be to use AJAX queries, but this is highly ineffiecient.
+
+11. Use regexes only for character checks. Length checks are separate checks for granularity.
+
+12. Electing not to include a password strength meter at this stage.
