@@ -15,31 +15,34 @@ final class EmailTest extends TestCase
         // validation fails but for this project that would be overkill.
         $allFailedValidation = TRUE;
 
+        $didntFailValidation = '';
+
         foreach ($invalidValues as $eachInvalidValue) {
             try {
                 call_user_func($validationFunction, $eachInvalidValue);
-                $allFailedValidation = FALSE;
+                $didntFailValidation = $eachInvalidValue;
             }
             catch (Exception $exception) {
                 $caughtExceptions++;
             }
         }
 
-        $this->assertTrue($allFailedValidation);
+        $this->assertEquals('', $didntFailValidation, 'Didn\'t fail validation as expected; ' . $didntFailValidation);
         $this->assertEquals(count($invalidValues), $caughtExceptions);
     }
 
     private function verify_valid_values_generic($validValues, $validationFunction) {
+        $allPassedValidation = TRUE;
         try {
-            foreach ($validValues as $eachvalidValue) {
-                Validator::verify_password_valid($eachValidValue);
+            foreach ($validValues as $eachValidValue) {
+                call_user_func($validationFunction, $eachValidValue);
             }
         }
         catch (Exception $exception) {
             $allPassedValidation = FALSE;
         }
 
-        $this->assertTrue($allPassedValidation, 'A valid username failed validation: ' . $eachvalidValue);
+        $this->assertTrue($allPassedValidation, 'A valid value failed validation: ' . $eachValidValue);
     }
 
     public function test_verify_username_valid_invalid_values() {
@@ -74,7 +77,7 @@ final class EmailTest extends TestCase
             '',
             '@missing_upper_case_letter1',
             '@Missing_Number',
-            'MissingCharacter1',
+            'MissingSpecCharacter1',
             'no space allowed',
             '_Invalidreallylongpasswordinvalidreallylongpassword',
         ];
@@ -84,8 +87,8 @@ final class EmailTest extends TestCase
 
     public function test_verify_password_valid_valid_values() {
         $validValues = array(
-            'Valid_Password1',
-            'Another_Valid_Password1',
+            'Valid_Password1!',
+            'Another_Valid_Password!1',
         );
 
         $this->verify_valid_values_generic($validValues, array('App\\Electroneum\\Validator', 'verify_password_valid'));
