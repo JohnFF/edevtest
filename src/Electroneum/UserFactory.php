@@ -24,7 +24,7 @@ class UserFactory {
      */
     public static function create_user($username, $firstName, $password) {
         Validator::verify_username_valid($username);
-        Validator::verify_password_valid($username);
+        Validator::verify_password_valid($password);
 
         $passwordHash = password_hash($password, self::PASSWORD_HASH_ALGORITHM);
 
