@@ -9,10 +9,13 @@ use Exception;
  */
 abstract class Validator {
 
-    const VALID_USERNAME_REGEX = "^[A-Za-z0-9]*$";
-
+    const VALID_USERNAME_REGEX = "/^[A-Za-z0-9]*$/";
     const MAX_USERNAME_LENGTH = 20;
-    
+
+    const VALID_PASSWORD_REGEX = '/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[*.!@$%^&(){}\[\]:;<>,.?~_\+\-=|]).*$/';
+    const MIN_PASSWORD_LENGTH = 6;
+    const MAX_PASSWORD_LENGTH = 30;
+
     /**
      * Confirms whether or not this is a valid username.
      * 
@@ -48,10 +51,25 @@ abstract class Validator {
      * @return bool
      */
     public static function verify_password_valid($input) : void {
-        // TODO : min length
-        // TODO : max length
-        // TODO : must contain a number
-        // TODO : must contain a capital
+        // Not empty
+        if (empty($input)) {
+            throw new Exception('Password is empty.');
+        }
+
+        // Doesn't exceed maximum length.
+        if (strlen($input) < self::MIN_PASSWORD_LENGTH) {
+            throw new Exception('Password under length.');
+        }
+
+        // Doesn't exceed maximum length.
+        if (strlen($input) > self::MAX_PASSWORD_LENGTH) {
+            throw new Exception('Password exceeds length.');
+        }
+
+        // Only valid characters.
+        if (false == preg_match(self::VALID_PASSWORD_REGEX, $input)) {
+            throw new Exception('Password fails regex.');
+        }
     }
 
 }
