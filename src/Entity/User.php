@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Electroneum;
+namespace App\Entity;
 
 /**
  * Represents the user entity.
@@ -9,13 +9,14 @@ namespace App\Electroneum;
 class User {
 
     private $firstName;
-    private $userName;
+    private $username;
 
     /**
      * Creates a user object.
      */
-    public function User($firstName, $userName) {
-        // TODO
+    public function __construct($firstName, $userName) {
+        $this->firstName = $firstName;
+        $this->username = $userName;
     }
     
     /**
@@ -30,6 +31,21 @@ class User {
      */
     public function save() {
         // TODO
+    }
+
+    /**
+     * Return an array of user variables.
+     *
+     * Could just use array cast and make some of the variables public, but
+     * this isn't good practice.
+     *
+     * @return array
+     */
+    public function toArray() {
+        return [
+            'first_name' => $this->firstName,
+            'username' => $this->username,
+        ];
     }
     
 }
