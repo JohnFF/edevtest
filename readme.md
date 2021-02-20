@@ -14,3 +14,6 @@
 6. Do not check the password is valid upon load unless we subsequently change password standards.
 
 7. On a production system it's beneficial to have different types of Exception, but for this that would feel like overkill.
+
+8. Much of PHP style is personal preference. I am happy to use any style recommended, but I've been consistent throughout. I always put commas on the last item of the array as well.
+This is part of the Drupal standards because if you add an entry you only change one line, not two!
