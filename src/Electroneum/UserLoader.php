@@ -3,6 +3,7 @@
 namespace App\Electroneum;
 
 use App\Electroneum\UserFactory;
+use App\Entity\User;
 
 /**
  * Loads the users.
@@ -14,7 +15,7 @@ class UserLoader {
      *
      * @param string $username
      */
-    public function load_user_into_session($username, $password): void {
+    public static function load_user($username, $password): User {
 
         // Verify the username each time before it's loaded to prevent file
         // traversal attempts.
@@ -31,13 +32,27 @@ class UserLoader {
         if (!password_verify($password, $storedUserDetails['password_hash'])) {
             throw new Exception('Incorrect password.');
         }
+        file_put_contents(UserFactory::STORAGE_FILEPATH . 'debug.txt', print_r($storedUserDetails, TRUE));
 
-        session_start();
+        return new User(
+            $storedUserDetails['first_name'],
+            $storedUserDetails['username']
+        );
 
-        $_SESSION['user'] = [
-            'username' => $storedUserDetails['username'],
-            'first_name' => $storedUserDetails['first_name'],
-        ];
+    }
+
+    /**
+     * Loads the user and puts his values in the session.
+     *
+     * @param string $username
+     * @param string $password
+     */
+    public static function load_user_into_session($username, $password) {
+        if(!isset($_SESSION))
+        {
+            session_start();
+        }
+        $_SESSION['user'] = self::load_user($username, $password)->toArray();
     }
 
 }
