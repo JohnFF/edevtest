@@ -3,6 +3,44 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
+        /**
+         * Provide user feedback on the username while they're typing.
+         */
+        $("#username_field").keyup(function(){
+            // Username too long.
+            if ($('#username_field').val().length > {{ validation.username.max_length }}) {
+                $("#username_feedback").text('Username too long');
+            }
+            // Username contains invalid characters.
+            else if (false == {{ validation.username.regex }}.test($('#username_field').val())) {
+                $("#username_feedback").text('Username contains invalid characters.');
+            }
+            else {
+                $("#username_feedback").text('');
+            }
+        });
+        
+        /**
+         * Provide user feedback on the password while they're typing.
+         */
+        $("#password_field").keyup(function(){
+            // Password too short.
+            if ($('#password_field').val().length < {{ validation.password.min_length }}) {
+                $("#password_feedback").text('Password too short');
+            }
+            // Password too long.
+            else if ($('#password_field').val().length > {{ validation.password.max_length }}) {
+                $("#password_feedback").text('Password too long');
+            }
+            // Password doesn't contain special characters.
+            else if (false == {{ validation.password.regex }}.test($("#password_field").val())) {
+                $("#password_feedback").text('Make sure to include upper case, lower case, numbers, and special characters in your password.');
+            }
+            else {
+                $("#password_feedback").text('');
+            }
+        });
+    
        /**
         * User clicks the register button.
         */
@@ -16,8 +54,8 @@
             function(data, status){
               alert("Data: " + data + "\nStatus: " + status);
             });
-
-            //window.location.replace("/dashboard.php");
+            $("#username_feedback").text('');
+            window.location.replace("/dashboard.php");
         });
 
        /**
@@ -39,9 +77,9 @@
         </script>
     </head>
 <body>
-Username <input id="username_field" type="text"></input>
+    Username <input id="username_field" type="text"></input><span id="username_feedback"></span>
 First name <input id="first_name_field" type="text"></input>
-Password <input id="password_field" type="text"></input>
+Password <input id="password_field" type="password"></input><span id="password_feedback"></span>
 <input id="register_button" type="button" value="Register"></type>
 <input id="sign_in_button" type="button" value="Sign in"></type>
 </body>
