@@ -17,3 +17,5 @@
 
 8. Much of PHP style is personal preference. I am happy to use any style recommended, but I've been consistent throughout. I always put commas on the last item of the array as well.
 This is part of the Drupal standards because if you add an entry you only change one line, not two!
+
+9. In a production system there would likely be two password regexes: one for dsallowed characters as well as allowed ones.
