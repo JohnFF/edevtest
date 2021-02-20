@@ -19,3 +19,6 @@
 This is part of the Drupal standards because if you add an entry you only change one line, not two!
 
 9. In a production system there would likely be two password regexes: one for dsallowed characters as well as allowed ones.
+
+10. Use the validation rule constants from the engine for the interface as well by passing them as Twig variables. This ensures there are never discrepancis between front end and back end validation.
+The other alterntive would be to use AJAX queries, but this is highly ineffiecient.
