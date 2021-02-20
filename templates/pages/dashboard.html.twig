@@ -1,4 +1,19 @@
 <html>
-<head></head>
-<body>Dashboard</body>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#sign_out_button").click(function(){
+                    $.post("/api/auth/signout", null,
+                    function(data, status){
+                        window.location.replace("/");
+                    });
+                });
+            });
+        </script>
+    </head>
+<body>
+    Hello {{ user.first_name }}!
+    <input id="sign_out_button" type="button" value="Sign Out"></type>
+</body>
 </html>

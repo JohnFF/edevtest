@@ -7,4 +7,10 @@
 
 3. Decided to store account credentials in json text files for a) ease and b) because my CRM experience shows I can do databases and c) I wanted to do something distinctly distinct. Keep them out of the web root!
 
-4. 
+4. Reference the file formats in UserFactory so as not to have to update them in two places.
+
+5. Check the username is valid upon load, to prevent directory traversal.
+
+6. Do not check the password is valid upon load unless we subsequently change password standards.
+
+7. On a production system it's beneficial to have different types of Exception, but for this that would feel like overkill.

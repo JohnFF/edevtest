@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller\Api\Auth;
+use App\Electroneum\Authenticator;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@ class SignOut extends AbstractController
     public function sign_out(): Response
     {
         try{
+            Authenticator::sign_out();
             return new Response("Signed out", self::SUCCESS_CODE);
         }
         catch (Exception $ex) {

@@ -9,6 +9,13 @@ class Dashboard extends AbstractController
 {
     public function show(): Response
     {
-        return $this->render('pages/dashboard.html.twig');
+        session_start();
+
+        return $this->render('pages/dashboard.html.twig', [
+            'user' => [
+                'first_name' => $_SESSION['user']['first_name'],
+                'username' => $_SESSION['user']['username'],
+            ]
+        ]);
     }
 }

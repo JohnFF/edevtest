@@ -34,7 +34,7 @@ class Authenticator {
      * @return bool whether the user was signed in.
      */
     public static function sign_in($username, $password)  : bool {
-        start_session();
+        session_start();
         
         // TODO
     }
@@ -46,7 +46,6 @@ class Authenticator {
      * sign out on one, then again on another, there is little consequence.
      */
     public static function sign_out() {
-        start_session();
         session_destroy();
     }
 

@@ -3,6 +3,7 @@
 namespace App\Controller\Api\User;
 
 use \App\Electroneum\UserFactory;
+use App\Electroneum\UserLoader;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +25,7 @@ class Register extends AbstractController
         $userFactory = new UserFactory();
         try {
             $userFactory->create_user($username, $firstName, $password);
+            UserLoader::load_user_into_session($username, $password);
             return new Response("Registered", self::SUCCESS_CODE);
         }
         catch (Exception $exception) {

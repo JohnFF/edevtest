@@ -7,11 +7,14 @@ namespace App\Electroneum;
  * 
  */
 class User {
-    
+
+    private $firstName;
+    private $userName;
+
     /**
      * Creates a user object.
      */
-    public function User() {
+    public function User($firstName, $userName) {
         // TODO
     }
     
