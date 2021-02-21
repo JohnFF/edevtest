@@ -20,8 +20,8 @@ abstract class Validator {
 
     const MAX_FEEDBACK_LENGTH = 2000;
 
-    const MIN_RATING_NUM = 0;
-    const MAX_RATING_NUM = 10;
+    const RATING_LOWER_BOUND = 0;
+    const RATING_UPPER_BOUND = 10;
 
     /**
      * Confirms whether or not this is a valid username.
