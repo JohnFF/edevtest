@@ -25,3 +25,5 @@ The other alterntive would be to use AJAX queries, but this is highly ineffiecie
 11. Use regexes only for character checks. Length checks are separate checks for granularity.
 
 12. Electing not to include a password strength meter at this stage.
+
+13. Had originally planned to make all changes via AJAX on key presses, but to make this not spammable is hard to do in the time available.

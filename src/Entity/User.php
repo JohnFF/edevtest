@@ -2,35 +2,71 @@
 
 namespace App\Entity;
 
+use App\Electroneum\Validator;
+
 /**
  * Represents the user entity.
  * 
  */
 class User {
 
+    const DEFAULT_FEEDBACK = '';
+    const DEFAULT_RATING = 5;
+
+    private $feedback;
     private $firstName;
+    private $passwordHash;
+    private $rating;
     private $username;
 
     /**
      * Creates a user object.
+     *
+     * @param string $firstName
+     * @param string $userName
+     * @param string $feedback
+     * @param string $rating
      */
-    public function __construct($firstName, $userName) {
+    public function __construct($firstName, $userName, $feedback, $rating, $passwordHash) {
+        $this->feedback = $feedback;
         $this->firstName = $firstName;
+        $this->rating = $rating;
         $this->username = $userName;
+        $this->passwordHash = $passwordHash;
     }
     
     /**
-     * Validates and sets the values.
+     * Validates and sets the values of user and saves the files.
+     *
+     * @param string $feedback
+     * @param string $firstname
+     * @param int $rating
      */
-    public function set_values() {
-        // TODO
+    public function update($feedback, $firstName, $rating) {
+
+        Validator::verify_feedback_valid($feedback);
+        Validator::verify_feedback_first_name($firstName);
+        Validator::verify_feedback_rating($rating);
+
+        $this->feedback =  htmlentities($feedback);
+        $this->firstName = htmlentities($firstName);
+        $this->rating = (int) $rating;
+
+        $this->save();
     }
     
     /**
      * Saves the user object.
      */
-    public function save() {
-        // TODO
+    private function save() {
+        $userDetails = [
+            'username' => $this->username,
+            'feedback' => $this->feedback,
+            'first_name' => $this->firstName,
+            'password_hash' => $this->passwordHash,
+            'rating' => $this->rating,
+        ];
+        file_put_contents(self::STORAGE_FILEPATH . $this->username . self::STORAGE_FILETYPE, json_encode($userDetails));
     }
 
     /**
@@ -41,9 +77,11 @@ class User {
      *
      * @return array
      */
-    public function toArray() {
+    public function getPublicValues() {
         return [
+            'feedback' => $this->feedback,
             'first_name' => $this->firstName,
+            'rating' => $this->rating,
             'username' => $this->username,
         ];
     }

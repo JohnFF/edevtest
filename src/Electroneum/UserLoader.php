@@ -14,8 +14,10 @@ class UserLoader {
      * Loads the user from the provided credentials
      *
      * @param string $username
+     * @param string $password
+     * @return User
      */
-    public static function load_user($username, $password): User {
+    public static function load_user($username): User {
 
         // Verify the username each time before it's loaded to prevent file
         // traversal attempts.
@@ -35,9 +37,20 @@ class UserLoader {
 
         return new User(
             $storedUserDetails['first_name'],
-            $storedUserDetails['username']
+            $storedUserDetails['username'],
+            $storedUserDetails['feedback'],
+            $storedUserDetails['rating']
         );
+    }
 
+    /**
+     *
+     * @param string $username
+     * @param string $password
+     * @return User
+     */
+    public static function load_user_with_password($username, $password): User {
+        return self::load_user($username);
     }
 
     /**
@@ -51,7 +64,7 @@ class UserLoader {
         {
             session_start();
         }
-        $_SESSION['user'] = self::load_user($username, $password)->toArray();
+        $_SESSION['user'] = self::load_user_with_password($username, $password)->getPublicValues();
     }
 
 }

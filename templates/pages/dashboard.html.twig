@@ -11,6 +11,9 @@
                 });
             });
             $(document).ready(function(){
+                /**
+                 * Close the account.
+                 */
                 $("#close_account_button").click(function(){
                     $.post("/api/user/closeacc",
                     {
@@ -21,11 +24,36 @@
                         window.location.replace("/");
                     });
                 });
+
+                /**
+                 * Rating field changes.
+                 */
+                $("#rating").change(function(){
+                $.post("api/user/update",
+                    {
+                        username: $("#username").innerHtml,
+                        first_name: $("#first_name").val(),
+                        rating: $("#rating").val(),
+                        feedback: $("#feedback").val(),
+                    },
+                    function(data, status){
+                        if (0 == status.localeCompare('success')) {
+                            $("#user_update_feedback").text('Updated rating.');
+                        }
+                        else {
+                            $("#user_update_feedback").text('Rating update failed.');
+                        }
+                    });
+                });
             });
         </script>
     </head>
 <body>
-    Hello {{ user.first_name }}!
+    Account name: {{ user.username }}<br/><br/>
+    Hello {{ user.first_name }}!<br/><br/>
+    First name: <input type="textbox" value="{{ user.first_name }}"></input><br/><br/>
+    Rating <input type="range" min="1" max="10" value="{{ user.rating }}" class="slider" id="rating"><br/><br/>
+    Feedback <input style="line-height: 100px" type="textarea" value="{{ user.feedback }}"></input>?<br/><br/>
     <input id="sign_out_button" type="button" value="Sign Out"></type>
     <input id="close_account_button" type="button" value="Close Account"></type>
 Password <input id="password_field" type="text"></input>

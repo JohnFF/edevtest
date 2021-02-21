@@ -2,6 +2,7 @@
 
 namespace App\Electroneum;
 
+use App\Entity\User;
 use App\Electroneum\UserLoader;
 
 /**
@@ -35,6 +36,8 @@ class UserFactory {
             'username' => $username,
             'first_name' => $firstName,
             'password_hash' => $passwordHash,
+            'feedback' => User::DEFAULT_FEEDBACK,
+            'rating' => User::DEFAULT_RATING,
         ];
 
         // TODO check file doesn't exist first.
@@ -53,7 +56,7 @@ class UserFactory {
         // A near identical function could be made to see if the password matches
         // the user, but as that would be mostly duplication, it's better to
         // just attempt a load.
-        UserLoader::load_user($username, $password);
+        UserLoader::load_user_with_password($username, $password);
 
         unlink(self::STORAGE_FILEPATH . $username . self::STORAGE_FILETYPE);
     }
