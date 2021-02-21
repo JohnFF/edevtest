@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Controller\Api\Auth;
+
+use Exception;
+
 use App\Electroneum\Authenticator;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +17,11 @@ class SignOut extends AbstractController
     public function sign_out(): Response
     {
         try{
+            session_start();
+            if (!array_key_exists('logged_in', $_SESSION)) {
+                throw new Exception('Not logged in');
+            }
+
             Authenticator::sign_out();
             return new Response("Signed out", self::SUCCESS_CODE);
         }

@@ -2,6 +2,8 @@
 
 namespace App\Controller\Api\User;
 
+use Exception;
+
 use App\Electroneum\UserLoader;
 use App\Electroneum\Validator;
 use App\Entity\User;
@@ -16,25 +18,27 @@ class Update extends AbstractController
     
     public function update(): Response
     {
-        if (!array_key_exists('user', $_SESSION)) {
-            throw new Exception('Not logged in!');
-        }
-
-        if (!array_key_exists('username', $_SESSION['user']) ) {
-            throw new Exception('Not logged in!');
-        }
-
-        $username = $_SESSION['user']['username'];
-
-        Validator::verify_username_valid($username);
-
-        $userLoader = new UserLoader();
-
-        $feedback = $_POST["feedback"];
-        $firstName = $_POST["first_name"];
-        $rating = $_POST["rating"];
-
         try {
+            session_start();
+
+            if (!array_key_exists('logged_in', $_SESSION)) {
+                throw new Exception('Not logged in!');
+            }
+
+            if (!array_key_exists('username', $_SESSION['user']) ) {
+                throw new Exception('Not logged in!');
+            }
+
+            $username = $_SESSION['user']['username'];
+
+            Validator::verify_username_valid($username);
+
+            $userLoader = new UserLoader();
+
+            $feedback = $_POST["feedback"];
+            $firstName = $_POST["first_name"];
+            $rating = $_POST["rating"];
+
             $user = $userLoader->load_user($username);
             $user->update($feedback, $firstName, $rating);
             return new Response("Updated", self::SUCCESS_CODE);

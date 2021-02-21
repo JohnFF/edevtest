@@ -18,6 +18,11 @@ class SignIn extends AbstractController
         $password = $_POST["password"];
 
         try {
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
+            $_SESSION['logged_in'] = true;
             UserLoader::load_user_into_session($username, $password);
             return new Response("Signed in", self::SUCCESS_CODE);
         }
