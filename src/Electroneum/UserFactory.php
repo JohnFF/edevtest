@@ -63,6 +63,11 @@ class UserFactory {
         // just attempt a load.
         UserLoader::load_user_with_password($username, $password);
 
-        unlink(self::STORAGE_FILEPATH . $username . self::STORAGE_FILETYPE);
+        try {
+            unlink(self::STORAGE_FILEPATH . $username . self::STORAGE_FILETYPE);
+        }
+        catch (Exception $exception) {
+            throw new Exception('User doesn\'t exist');
+        }
     }
 }
