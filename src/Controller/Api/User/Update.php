@@ -41,10 +41,14 @@ class Update extends AbstractController
 
             $user = $userLoader->load_user($username);
             $user->update($feedback, $firstName, $rating);
-            return new Response("Updated", self::SUCCESS_CODE);
+            return new Response(json_encode('Updated'), self::SUCCESS_CODE);
         }
-        catch (Exception $ex) {
-            return new Response("Failed to update", self::FAILURE_CODE);
+        catch (Exception $exception) {
+            return new Response(
+                json_encode(['error_message' => $exception->getMessage()]),
+                self::FAILURE_CODE,
+                ['Content-Type: application/json']
+            );
         }
     }
 }

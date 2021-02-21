@@ -29,10 +29,14 @@ class SignOut extends AbstractController
         try{
             session_start();
             session_destroy();
-            return new Response("Signed out", self::SUCCESS_CODE);
+            return new Response(json_encode("Signed out"), self::SUCCESS_CODE);
         }
-        catch (Exception $ex) {
-            return new Response("Failed to sign out", self::FAILURE_CODE);
+        catch (Exception $exception) {
+            return new Response(
+                json_encode(['error_message' => $exception->getMessage()]),
+                self::FAILURE_CODE,
+                ['Content-Type: application/json']
+            );
         }
     }
 }
