@@ -33,10 +33,10 @@ class UserLoader {
         $storedUserDetails = json_decode($rawStoredUserDetails, true);
 
         return new User(
-            $storedUserDetails['first_name'],
+            htmlentities($storedUserDetails['first_name']),
             $storedUserDetails['username'],
-            $storedUserDetails['feedback'],
-            $storedUserDetails['rating'],
+            htmlentities($storedUserDetails['feedback']),
+            (int) $storedUserDetails['rating'],
             $storedUserDetails['password_hash']
         );
     }

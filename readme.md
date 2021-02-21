@@ -30,3 +30,5 @@ The other alterntive would be to use AJAX queries, but this is highly ineffiecie
 13. Had originally planned to make all changes via AJAX on key presses, but to make this not spammable is hard to do in the time available.
 
 14. For the time being, don't provide feedback to the user if the user is already taken. This could be easily added as a feature.
+
+15. Added prevention to script injection attacks.
