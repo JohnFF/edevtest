@@ -26,6 +26,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
             $(document).ready(function(){
+
+              /**
+               * Implement scroll functionality.
+               */
+                $('.scroll_link').click(function() {
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $('#' + $(this).attr('data-scrollto')).offset().top
+                    }, 1000);
+                });
+
                 /**
                  * Provide user feedback on the username while they're typing.
                  */
@@ -48,8 +58,8 @@
                  */
                 $("#register_password_field").keyup(function(){
                     // Password too short.
-                    if ($('#password_field').val().length < {{ validation.password.min_length }}) {
-                        $("#password_feedback").text('Password too short');
+                    if ($('#register_password_field').val().length < {{ validation.password.min_length }}) {
+                        $("#register_password_feedback").text('Password too short');
                     }
                     // Password too long.
                     else if ($('#register_password_field').val().length > {{ validation.password.max_length }}) {
@@ -64,26 +74,27 @@
                     }
                 });
 
-
                /**
                 * User clicks the register button.
                 */
                 $("#register_button").click(function(){
-                    $.post("api/user/register",
-                    {
-                        username: $("#register_username_field").val(),
-                        first_name: $("#register_first_name_field").val(),
-                        password: $("#register_password_field").val(),
-                    },
-                    function(data, status){
-                        if (0 == status.localeCompare('success')) {
+                    $.ajax({
+                        url: "/api/user/register",
+                        type: 'POST',
+                        data: {
+                            username: $("#register_username_field").val(),
+                            first_name: $("#register_first_name_field").val(),
+                            password: $("#register_password_field").val(),
+                        },
+                        dataType:'JSON',
+                        success: function(result){
                             $("#registration_feedback").text('Registration successful!');
                             window.setTimeout(function() {
                                 window.location.replace("/dashboard");
                             }, 2000);
-                        }
-                        else {
-                            $("#registration_feedback").text('Registration unsuccessful!');
+                        },
+                        error: function(response) {
+                            $("#registration_feedback").html('Registration unsuccessful!<br/>' + response.responseJSON.error_message);
                         }
                     });
                 });
@@ -92,20 +103,22 @@
                 * User clicks the sign in button.
                 */
                 $("#sign_in_button").click(function(){
-                    $.post("api/auth/signin",
-                    {
-                        username: $("#sign_in_username_field").val(),
-                        password: $("#sign_in_password_field").val(),
-                    },
-                    function(data, status){
-                        if (0 == status.localeCompare('success')) {
+                    $.ajax({
+                        url: "/api/auth/signin",
+                        type: 'POST',
+                        data: {
+                            password: $("#sign_in_password_field").val(),
+                            username: $("#sign_in_username_field").val(),
+                        },
+                        dataType:'JSON',
+                        success: function(result){
                             $("#sign_in_feedback").text('Sign in successful!');
                             window.setTimeout(function() {
                                 window.location.replace("/dashboard");
                             }, 2000);
-                        }
-                        else {
-                            $("#sign_in_feedback").text('Registration unsuccessful!');
+                        },
+                        error: function(response) {
+                            $("#sign_in_feedback").html('Sign in unsuccessful!<br/>' + response.responseJSON.error_message);
                         }
                     });
                 });
@@ -127,8 +140,8 @@
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__widget">
-            <span>Call us for any questions</span>
-            <h4>+01 123 456 789</h4>
+            <span>What do you think?</span>
+            <h4>07786 944 013</h4>
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -146,11 +159,11 @@
                     <nav class="header__menu mobile-menu">
                         <ul>
                             <li class="active"><a href="./index.html">Home</a></li>
-                            <li><a href="#">Dilemma</a></li>
-                            <li><a href="#">Approach</a></li>
-                            <li><a href="#">Register</a></li>
-                            <li><a href="#">Sign in</a></li>
-                            <li><a href="#">Codebase</a></li>
+                            <li><a href="#" data-scrollto='dilemma' class='scroll_link'>Dilemma</a></li>
+                            <li><a href="#" data-scrollto='approach' class='scroll_link'>Approach</a></li>
+                            <li><a href="#" data-scrollto='portal' class='scroll_link'>Register</a></li>
+                            <li><a href="#" data-scrollto='notes' class='scroll_link'>Notes</a></li>
+                            <li><a href="https://github.com/JohnFF/edevtest">Codebase</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -172,22 +185,22 @@
             <div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
                 <div class="hero__text">
                     <h2>Quality is not subjective</h2>
-                    <a href="#" class="primary-btn">Register Now</a>
+                    <a href="#" class="primary-btn scroll_link" data-scrollto='portal'>Register Now</a>
                     <a href="#" class="more_btn">Next section</a>
-                    <div class="hero__social">>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-github"></i></a>
+                    <div class="hero__social">
+                        <a href="https://twitter.com/civifirst"><i class="fa fa-twitter"></i></a>
+                        <a href="https://github.com/johnff"><i class="fa fa-github"></i></a>
                     </div>
                 </div>
             </div>
             <div class="hero__items set-bg" data-setbg="img/hero/hero-2.jpg">
                 <div class="hero__text">
                     <h2>Dream employers use symfony?</h2>
-                    <a href="#" class="primary-btn">See Dilemma</a>
+                    <a href="#" class="primary-btn scroll_link" data-scrollto='dilemma'>See Dilemma</a>
                     <a href="#" class="more_btn">Next section</a>
                     <div class="hero__social">
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-github"></i></a>
+                        <a href="https://twitter.com/civifirst"><i class="fa fa-twitter"></i></a>
+                        <a href="https://github.com/johnff"><i class="fa fa-github"></i></a>
                     </div>
                 </div>
             </div>
@@ -197,8 +210,8 @@
     </section>
     <!-- Hero Section End -->
 
-    <!-- About Section Begin -->
-    <section class="dilemma spad">
+    <!-- Dilemma Section Begin -->
+    <section id="dilemma" class="dilemma spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -216,7 +229,7 @@
                             </ul>
                         </div>
                         <br/>
-                        <a href="#" class="primary-btn normal-btn">The Approach</a>
+                        <a href="#" data-scrollto='approach' class='scroll_link primary-btn normal-btn'>The Approach</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -229,11 +242,11 @@
             </div>
         </div>
     </section>
-    <!-- About Section End -->
+    <!-- Dilemma Section End -->
 
     
-        <!-- About Section Begin -->
-    <section class="about spad">
+    <!-- Approach Section Begin -->
+    <section id="approach" class="about spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
@@ -251,7 +264,7 @@
                             </ul>
                         </div>
                         <br/>
-                        <a href="#" class="primary-btn normal-btn">Now to register...</a>
+                        <a href="#" data-scrollto='portal' class='scroll_link primary-btn normal-btn'>Now to register...</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -264,20 +277,21 @@
             </div>
         </div>
     </section>
-    <!-- About Section End -->
+    <!-- Approach Section End -->
     
     <!-- Project Section Begin -->
-    <section class="project set-bg"  data-setbg="img/testimonial/testimonial-bg.jpg">
+    <section id="portal" style="padding: 100px" class="project set-bg"  data-setbg="img/testimonial/testimonial-bg.jpg">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="section-title">
                         <span>It's portal time!</span>
                         <h2>Register Now</h2>
-                        Username <input id="register_username_field" type="text"></input><span id="register_username_feedback"></span>
-                        First name <input id="register_first_name_field" type="text"></input><span id="register_first_name_feedback"></span>
-                        Password <input id="register_password_field" type="password"></input><span id="register_password_feedback"></span><br/>
-                        <input id="register_button" type="button" value="Register"></input><span id="registration_feedback"></span>
+                        Username <input id="register_username_field" type="text" /><span id="register_username_feedback"></span>
+                        First name <input id="register_first_name_field" type="text" /><span id="register_first_name_feedback"></span>
+                        Password <input id="register_password_field" type="password" /><span id="register_password_feedback"></span><br/>
+                        <a id="register_button" type="button" value="" class='primary-btn normal-btn'>Register</a><span id="registration_feedback"></span>
+                        <br/>
                     </div>
                 </div>
             </div>
@@ -286,18 +300,20 @@
                     <div class="section-title">
                         <span>Already registered?</span>
                         <h2>Sign In</h2>
-                        Username <input id="sign_in_username_field" type="text"></input><span id="sign_in_username_feedback"></span>
-                        Password <input id="sign_in_password_field" type="password"></input><span id="sign_in_password_feedback"></span>
-                        <input id="sign_in_button" type="button" value="Sign in"></input><span id="sign_in_feedback"></span>
+                        Username <input id="sign_in_username_field" type="text" /><span id="sign_in_username_feedback"></span>
+                        Password <input id="sign_in_password_field" type="password" /><span id="sign_in_password_feedback"></span>
+                        <a id="sign_in_button" type="button" class='primary-btn normal-btn'>Sign in</a><span id="sign_in_feedback"></span>
                     </div>
+                    <br/>
+                    <a href="#" data-scrollto='notes' class='scroll_link primary-btn normal-btn'>Implementation notes</a>
                 </div>
             </div>
         </div>
     </section>
     <!-- Project Section End -->
 
-    <!-- Services Section Begin -->
-    <section class="services spad">
+    <!-- Notes Section Begin -->
+    <section id="notes" class="services spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -349,7 +365,7 @@
                     <div class="services__item">
                         <img src="img/services/services-4.png" alt="">
                         <h4>Clarity</h4>
-                        <p>Self-documenting code doesn't exist, so each function and class has its own clear comment block.</p>
+                        <p>Self-documenting code doesn't exist, so each function and class has its own clear comment block and a clear naming scheme.</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-sm-6">
@@ -359,20 +375,12 @@
                         <p>To demonstrate I could work across the stack, I adopted and adapted a sophisticated theme, including adding jQuery and moving it to Twig for Symfony.</p>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="services__item">
-                        <img src="img/services/services-4.png" alt="">
-                        <h4>Design drawing</h4>
-                        <p>Creating architectural and creative solutions to help people realize their vision and make
-                        them a reality.</p>
-                    </div>
-                </div>
             </div>
             <div class="counter__content">
             </div>
         </div>
     </section>
-    <!-- Services Section End -->
+    <!-- Notes Section End -->
 
     <!-- Call To Action Section Begin -->
     <section class="callto spad set-bg" data-setbg="img/call-bg.jpg">
@@ -392,8 +400,8 @@
     </section>
     <!-- Call To Action Section End -->
 
-    <!-- Latest Section Begin -->
-    <section class="latest spad">
+    <!-- Projects Section Begin -->
+    <section id="projects" class="latest spad">
         <div class="container">
             <div class="row">
                 <div class="col-lg-9 col-md-8 col-sm-6">
@@ -417,7 +425,7 @@
                         <div class="latest__item__text">
                             <span>Data Cleaning</span>
                             <h4>Email Address Corrector</h4>
-                            <a href="#">See code</a>
+                            <a href="https://github.com/JohnFF/Email-Amender">See code</a>
                         </div>
                     </div>
                 </div>
@@ -429,7 +437,7 @@
                         <div class="latest__item__text">
                             <span>Data Cleaning</span>
                             <h4>Phone Number Validator</h4>
-                            <a href="#">See code</a>
+                            <a href="https://github.com/JohnFF/Phone-Number-Validator">See code</a>
                         </div>
                     </div>
                 </div>
@@ -441,14 +449,14 @@
                         <div class="latest__item__text">
                             <span>Security</span>
                             <h4>Path2ban: Drupal Security Module</h4>
-                            <a href="#">See project</a>
+                            <a href="https://www.drupal.org/project/path2ban">See project</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Latest Section End -->
+    <!-- Projects Section End -->
 
     <!-- Footer Section Begin -->
     <footer style="padding: 0px" class="footer set-bg" data-setbg="img/footer-bg.jpg">
