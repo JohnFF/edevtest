@@ -16,6 +16,13 @@ abstract class Validator {
     const MIN_PASSWORD_LENGTH = 6;
     const MAX_PASSWORD_LENGTH = 30;
 
+    const MAX_FIRST_NAME_LENGTH = 20;
+
+    const MAX_FEEDBACK_LENGTH = 2000;
+
+    const MIN_RATING_NUM = 0;
+    const MAX_RATING_NUM = 10;
+
     /**
      * Confirms whether or not this is a valid username.
      * 
@@ -26,7 +33,7 @@ abstract class Validator {
      */
     public static function verify_username_valid($input) : void {
 
-        // Not empty
+        // Not empty.
         if (empty($input)) {
             throw new Exception('Username is empty.');
         }
@@ -51,7 +58,7 @@ abstract class Validator {
      * @return bool
      */
     public static function verify_password_valid($input) : void {
-        // Not empty
+        // Not empty.
         if (empty($input)) {
             throw new Exception('Password is empty.');
         }
@@ -77,7 +84,10 @@ abstract class Validator {
      * @param string $feedback
      */
     public static function verify_feedback_valid($feedback) {
-        
+        // Doesn't exceed maximum length.
+        if (strlen($feedback) > self::MAX_FEEDBACK_LENGTH) {
+            throw new Exception('Username exceeds length.');
+        }
     }
 
     /**
@@ -85,7 +95,10 @@ abstract class Validator {
      * @param string $firstName
      */
     public static function verify_feedback_first_name($firstName) {
-
+        // Doesn't exceed maximum length.
+        if (strlen($firstName) > self::MAX_FIRST_NAME_LENGTH) {
+            throw new Exception('First name exceeds length.');
+        }
     }
 
     /**
@@ -93,7 +106,14 @@ abstract class Validator {
      * @param int $rating
      */
     public static function verify_feedback_rating($rating) {
-        
+        // Check the input is an int.
+        $rating = (int) $rating;
+
+        if ($rating < self::RATING_LOWER_BOUND) {
+            throw new Exception('Rating violates lower bound');
+        } elseif ($rating > self::RATING_UPPER_BOUND) {
+            throw new Exception('Rating exceeds upper bound');
+        }
     }
 
 }
