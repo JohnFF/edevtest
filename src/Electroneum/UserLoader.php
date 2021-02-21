@@ -50,18 +50,13 @@ class UserLoader {
     public static function load_user_with_password($username, $password): User {
 
         $storedUserDetails = self::load_user($username);
+        $storedUserDetailsArray = $storedUserDetails->toArray();
 
-        if (!password_verify($password, $storedUserDetails['password_hash'])) {
+        if (!password_verify($password, $storedUserDetailsArray['password_hash'])) {
             throw new Exception('Incorrect password.');
         }
 
-        return new User(
-            $storedUserDetails['first_name'],
-            $storedUserDetails['username'],
-            $storedUserDetails['feedback'],
-            $storedUserDetails['rating'],
-            $storedUserDetails['password_hash']
-        );
+        return $storedUserDetails;
     }
 
     /**

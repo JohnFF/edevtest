@@ -101,8 +101,11 @@ class User {
      */
     public function toArray() {
         return [
-            'first_name' => $this->firstName,
             'username' => $this->username,
+            'feedback' => $this->feedback,
+            'first_name' => $this->firstName,
+            'password_hash' => $this->passwordHash,
+            'rating' => $this->rating,
         ];
     }
     
