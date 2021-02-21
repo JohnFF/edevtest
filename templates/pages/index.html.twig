@@ -1,43 +1,66 @@
-<html>
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Staging Template">
+    <meta name="keywords" content="Staging, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Staging | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slick.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
             $(document).ready(function(){
                 /**
                  * Provide user feedback on the username while they're typing.
                  */
                 $("#username_field").keyup(function(){
                     // Username too long.
-                    if ($('#username_field').val().length > {{ validation.username.max_length }}) {
-                        $("#username_feedback").text('Username too long');
+                    if ($('#register_username_field').val().length > {{ validation.username.max_length }}) {
+                        $("#register_username_feedback").text('Username too long');
                     }
                     // Username contains invalid characters.
                     else if (false == {{ validation.username.regex }}.test($('#username_field').val())) {
-                        $("#username_feedback").text('Username contains invalid characters.');
+                        $("#register_username_feedback").text('Username contains invalid characters.');
                     }
                     else {
-                        $("#username_feedback").text('');
+                        $("#register_username_feedback").text('');
                     }
                 });
 
                 /**
                  * Provide user feedback on the password while they're typing.
                  */
-                $("#password_field").keyup(function(){
+                $("#register_password_field").keyup(function(){
                     // Password too short.
                     if ($('#password_field').val().length < {{ validation.password.min_length }}) {
                         $("#password_feedback").text('Password too short');
                     }
                     // Password too long.
-                    else if ($('#password_field').val().length > {{ validation.password.max_length }}) {
-                        $("#password_feedback").text('Password too long');
+                    else if ($('#register_password_field').val().length > {{ validation.password.max_length }}) {
+                        $("#register_password_feedback").text('Password too long');
                     }
                     // Password doesn't contain special characters.
-                    else if (false == {{ validation.password.regex }}.test($("#password_field").val())) {
-                        $("#password_feedback").text('Make sure to include upper case, lower case, numbers, and special characters in your password.');
+                    else if (false == {{ validation.password.regex }}.test($("#register_password_field").val())) {
+                        $("#register_password_feedback").text('Make sure to include upper case, lower case, numbers, and special characters in your password.');
                     }
                     else {
-                        $("#password_feedback").text('');
+                        $("#register_password_feedback").text('');
                     }
                 });
 
@@ -48,9 +71,9 @@
                 $("#register_button").click(function(){
                     $.post("api/user/register",
                     {
-                        username: $("#username_field").val(),
-                        first_name: $("#first_name_field").val(),
-                        password: $("#password_field").val(),
+                        username: $("#register_username_field").val(),
+                        first_name: $("#register_first_name_field").val(),
+                        password: $("#register_password_field").val(),
                     },
                     function(data, status){
                         if (0 == status.localeCompare('success')) {
@@ -88,13 +111,449 @@
                 });
             });
         </script>
-    </head>
-<body>
-Username <input id="username_field" type="text"></input><span id="username_feedback"></span>
-First name <input id="first_name_field" type="text"></input>
-Password <input id="password_field" type="password"></input><span id="password_feedback"></span>
-<input id="register_button" type="button" value="Register"></input><span id="registration_feedback"></span>
-<input id="sign_in_button" type="button" value="Sign in"></input><span id="sign_in_feedback"></span>
-</body>
-</html>
+</head>
 
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__logo">
+            <a href="#"><img src="img/logo.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__widget">
+            <span>Call us for any questions</span>
+            <h4>+01 123 456 789</h4>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="#"><img src="img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li class="active"><a href="./index.html">Home</a></li>
+                            <li><a href="#">Dilemma</a></li>
+                            <li><a href="#">Approach</a></li>
+                            <li><a href="#">Register</a></li>
+                            <li><a href="#">Sign in</a></li>
+                            <li><a href="#">Codebase</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__widget">
+                        <span>What do you think?</span>
+                        <h4>07786 944 013</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="hero__slider owl-carousel">
+            <div class="hero__items set-bg" data-setbg="img/hero/hero-1.jpg">
+                <div class="hero__text">
+                    <h2>Quality is not subjective</h2>
+                    <a href="#" class="primary-btn">Register Now</a>
+                    <a href="#" class="more_btn">Next section</a>
+                    <div class="hero__social">>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero__items set-bg" data-setbg="img/hero/hero-2.jpg">
+                <div class="hero__text">
+                    <h2>Dream employers use symfony?</h2>
+                    <a href="#" class="primary-btn">See Dilemma</a>
+                    <a href="#" class="more_btn">Next section</a>
+                    <div class="hero__social">
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-num" id="snh-1"></div>
+        <div class="slider__progress"><span></span></div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- About Section Begin -->
+    <section class="dilemma spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="dilemma__text">
+                        <div class="section-title">
+                            <span>what's the problem?</span>
+                            <h2>The Dilemma</h2>
+                        </div>
+                        <div class="dilemma__para__text">
+                            <ul>
+                                <li>Dream employer uses symfony, but...</li>
+                                <li>Would doing the exercise in "pure" Symfony mean it was perceived as too easy?</li>
+                                <li>Would doing it in "pure" PHP mean that I miss out on the chance to show I could work in Symfony?</li>
+                                <li>I want it ready for them first thing on Monday morning!</li>
+                            </ul>
+                        </div>
+                        <br/>
+                        <a href="#" class="primary-btn normal-btn">The Approach</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="dilemma__pic">
+                        <div class="dilemma__pic__inner">
+                            <img src="img/about-pic.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section End -->
+
+    
+        <!-- About Section Begin -->
+    <section class="about spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="approach__text">
+                        <div class="section-title">
+                            <span>How to solve it</span>
+                            <h2>The approach</h2>
+                        </div>
+                        <div class="approach__para__text">
+                            <ul>
+                                <li>Use symfony as the core engine, but develop custom components for sessions and storage.</li>
+                                <li>Implement a simple storage mechanism that's secure and robust: introducing fewer variables that could delay delivery.</li>
+                                <li>Instead make absolutely sure that all the core features are SOLID, polished, secure, and robust, before...</li>
+                                <li>Investing any remaining time on integrating a great interface to make a great first impression.</li>
+                            </ul>
+                        </div>
+                        <br/>
+                        <a href="#" class="primary-btn normal-btn">Now to register...</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="approach__pic">
+                        <div class="approach__pic__inner">
+                            <img src="img/about-pic.jpg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Section End -->
+    
+    <!-- Project Section Begin -->
+    <section class="project set-bg"  data-setbg="img/testimonial/testimonial-bg.jpg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-title">
+                        <span>It's portal time!</span>
+                        <h2>Register Now</h2>
+                        Username <input id="register_username_field" type="text"></input><span id="register_username_feedback"></span>
+                        First name <input id="register_first_name_field" type="text"></input><span id="register_first_name_feedback"></span>
+                        Password <input id="register_password_field" type="password"></input><span id="register_password_feedback"></span><br/>
+                        <input id="register_button" type="button" value="Register"></input><span id="registration_feedback"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="section-title">
+                        <span>Already registered?</span>
+                        <h2>Sign In</h2>
+                        Username <input id="sign_in_username_field" type="text"></input><span id="sign_in_username_feedback"></span>
+                        Password <input id="sign_in_password_field" type="password"></input><span id="sign_in_password_feedback"></span>
+                        <input id="sign_in_button" type="button" value="Sign in"></input><span id="sign_in_feedback"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Project Section End -->
+
+    <!-- Services Section Begin -->
+    <section class="services spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <span>Some Details</span>
+                        <h2>Implementation Notes</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="services__item">
+                        <img src="img/services/services-4.png" alt="">
+                        <h4>Consistent Style</h4>
+                        <p>Different firms use different styles: the important thing is consistency.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="services__item">
+                        <img src="img/services/services-4.png" alt="">
+                        <h4>Test Driven</h4>
+                        <p>Key functions are covered by automated tests.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="services__item">
+                        <img src="img/services/services-4.png" alt="">
+                        <h4>Validation</h4>
+                        <p>Front end validation is backed up with server-side validation, to prevent mischief.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="services__item">
+                        <img src="img/services/services-4.png" alt="">
+                        <h4>Architecture</h4>
+                        <p>Separated elements into MVC, and then further into SOLID design.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="services__item">
+                        <img src="img/services/services-4.png" alt="">
+                        <h4>Symfony core</h4>
+                        <p>Although not a symfony guy, it was important to demonstrate that I could adopt it with no problems (without using it to do all the lifting!).</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="services__item">
+                        <img src="img/services/services-4.png" alt="">
+                        <h4>Clarity</h4>
+                        <p>Self-documenting code doesn't exist, so each function and class has its own clear comment block.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="services__item">
+                        <img src="img/services/services-4.png" alt="">
+                        <h4>Themes</h4>
+                        <p>To demonstrate I could work across the stack, I adopted and adapted a sophisticated theme, including adding jQuery and moving it to Twig for Symfony.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="services__item">
+                        <img src="img/services/services-4.png" alt="">
+                        <h4>Design drawing</h4>
+                        <p>Creating architectural and creative solutions to help people realize their vision and make
+                        them a reality.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="counter__content">
+            </div>
+        </div>
+    </section>
+    <!-- Services Section End -->
+
+    <!-- Call To Action Section Begin -->
+    <section class="callto spad set-bg" data-setbg="img/call-bg.jpg">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <div class="callto__text">
+                        <span>Let's talk</span>
+                        <h2>
+                            Happy to rebuild in either pure Symfony or pure PHP!
+                        </h2>
+                        <a href="#" class="primary-btn">Let me know</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Call To Action Section End -->
+
+    <!-- Latest Section Begin -->
+    <section class="latest spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-8 col-sm-6">
+                    <div class="section-title">
+                        <span>From GitHub</span>
+                        <h2>Other cool projects</h2>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="latest__btn">
+                        <a href="http://github.com/johnff" class="primary-btn normal-btn">The Repo</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="latest__item">
+                        <div class="latest__item__pic">
+                            <img src="img/blog/latest-1.jpg" alt="">
+                        </div>
+                        <div class="latest__item__text">
+                            <span>Data Cleaning</span>
+                            <h4>Email Address Corrector</h4>
+                            <a href="#">See code</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="latest__item">
+                        <div class="latest__item__pic">
+                            <img src="img/blog/latest-2.jpg" alt="">
+                        </div>
+                        <div class="latest__item__text">
+                            <span>Data Cleaning</span>
+                            <h4>Phone Number Validator</h4>
+                            <a href="#">See code</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="latest__item">
+                        <div class="latest__item__pic">
+                            <img src="img/blog/latest-3.jpg" alt="">
+                        </div>
+                        <div class="latest__item__text">
+                            <span>Security</span>
+                            <h4>Path2ban: Drupal Security Module</h4>
+                            <a href="#">See project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Latest Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer set-bg" data-setbg="img/footer-bg.jpg">
+        <div class="container">
+            <div class="footer__top">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="footer__top__text">
+                            <h2>Ready To Work With Us?</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer__top__newslatter">
+                            <form action="#">
+                                <input type="text" placeholder="Enter your email...">
+                                <button type="submit"><i class="fa fa-send"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="footer__about">
+                        <div class="footer__logo">
+                            <a href="#"><img src="img/logo.png" alt=""></a>
+                        </div>
+                        <p>7176 Blue Spring Lane <br />Santa Monica, CA 90403</p>
+                        <ul>
+                            <li>Info.colorlib@gmail.com</li>
+                            <li>+84 123 456 789</li>
+                        </ul>
+                        <div class="footer__social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Company</h6>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Our Works</a></li>
+                            <li><a href="#">Career</a></li>
+                            <li><a href="#">FAQs</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6">
+                    <div class="footer__widget">
+                        <h6>Services</h6>
+                        <ul>
+                            <li><a href="#">Architecture</a></li>
+                            <li><a href="#">Interior Design</a></li>
+                            <li><a href="#">Exterior Design</a></li>
+                            <li><a href="#">Planning</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="footer__address">
+                        <h6>Get In Touch</h6>
+                        <p>7176 Blue Spring Lane <br />Santa Monica, CA 90403</p>
+                        <ul>
+                            <li>Info.colorlib@gmail.com</li>
+                            <li>+84 123 456 789</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-lg-8 col-md-7">
+                        <div class="copyright__text">
+                            <p>Copyright © <script>
+                                document.write(new Date().getFullYear());
+                            </script> All rights reserved | This template is made with <i class="fa fa-heart-o"
+                            aria-hidden="true"></i> by <a href="https://colorlib.com"
+                            target="_blank">Colorlib</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                    <div class="copyright__widget">
+                        <a href="#">Terms of use</a>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+
+</html>

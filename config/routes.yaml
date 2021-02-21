@@ -32,3 +32,25 @@ app_electroneum_api_user_register:
 app_electroneum_api_user_update:
     path: /api/user/update
     controller: App\Controller\Api\User\Update::update
+
+# Styling
+app_electroneum_web_css:
+    path: /css/{css}
+    controller: App\Controller\Pages\Rendering\Css::load
+    
+app_electroneum_web_fonts:
+    path: /fonts/{fonts}
+    controller: App\Controller\Pages\Rendering\Fonts::load
+    
+app_electroneum_web_img:
+    path: /img/{img}
+    controller: App\Controller\Pages\Rendering\Img::load_from_base_folder
+    
+app_electroneum_web_img_folder:
+    path: /img/{img_folder}/{img}
+    controller: App\Controller\Pages\Rendering\Img::load_with_folder
+    
+app_electroneum_web_js:
+    path: /js/{js}
+    controller: App\Controller\Pages\Rendering\Js::load
+    
