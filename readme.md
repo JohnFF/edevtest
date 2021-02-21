@@ -37,3 +37,5 @@ The other alterntive would be to use AJAX queries, but this is highly ineffiecie
 
 17. Normally the rule with API classes is to pass them instantly to a class to handle the function. In this case, that would be the only remaining 
 justification for Authenticator's existence, so it's best removed for Occam's razor.
+
+18. Plan to place enter password to close account in a pop up, but ran out of time.

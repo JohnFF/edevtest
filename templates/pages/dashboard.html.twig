@@ -21,69 +21,79 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                /**
-                 * Styling forces us to use form element, let's disable it's
-                 * default behaviour as it's making us jump to the top of the
-                 * page.
-                 */
-                $('form').submit(function() {
-                    return false;
-                })
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            /**
+             * Styling forces us to use form element, let's disable it's
+             * default behaviour as it's making us jump to the top of the
+             * page.
+             */
+            $('form').submit(function() {
+                return false;
+            })
 
-                /**
-                 * Sign out button.
-                 */
-                $("#sign_out_button").click(function(){
-                    $.ajax({url: "/api/auth/signout",
-                        success: function(result){
-                            window.location.replace("/");
-                        },
-                        error: function() {
-                            $("#sign_out_feedback").text('Failed to sign out.');
-                        }
-                    });
+            /**
+             * Sign out button.
+             */
+            $("#sign_out_button").click(function(){
+                $.ajax({url: "/api/auth/signout",
+                    success: function(result){
+                        $("#sign_out_feedback").text('Signing out.');
+                        window.location.replace("/");
+                    },
+                    error: function() {
+                        $("#sign_out_feedback").text('Failed to sign out: ' + response.responseJSON.error_message);
+                    }
                 });
+            });
 
-                /**
-                 * Close the account.
-                 */
-                $("#close_account_button").click(function(){
-                    $.post("/api/user/closeacc",
-                    {
+            /**
+             * Close the account.
+             */
+            $("#close_account_button").click(function(){
+                $.ajax({
+                    url: "api/user/closeacc",
+                    type: 'POST',
+                    data: {
                         username: $("#username_field").val(),
                         password: $("#password_field").val(),
                     },
-                    function(data, status){
-                        return false;
+                    dataType:'JSON',
+                    success: function(result){
                         window.location.replace("/");
-                    });
+                    },
+                    error: function(response) {
+                        $("#close_account_feedback").html('Close Account unsuccessful: ' + response.responseJSON.error_message);
+                    }
                 });
+            });
 
-                /**
-                 * Updated user fields.
-                 */
-                $("#save_button").click(function(){
-                    $.post("api/user/update",
-                    {
+            /**
+             * Updated user fields.
+             */
+            $("#save_button").click(function(){
+                $.ajax({
+                    url: "api/user/update",
+                    type: 'POST',
+                    data: {
                         first_name: $("#first_name_field").val(),
                         feedback: $("#feedback_field").val(),
                         rating: $("#rating_field").val(),
                     },
-                    function(data, status){
-                        if (0 == status.localeCompare('success')) {
-                            $("#sign_in_feedback").text('Update successful!');
-                        }
-                        else {
-                            $("#sign_in_feedback").text('Update unsuccessful!');
-                        }
-                    });
-                    return false;
+                    dataType:'JSON',
+                    success: function(result){
+                        $("#sign_in_feedback").text('Update successful!');
+                    },
+                    error: function(response) {
+                        $("#sign_in_feedback").html('Update unsuccessful: ' + response.responseJSON.error_message);
+                    }
                 });
+
+                return false;
             });
-        </script>
+        });
+    </script>
 </head>
 
 <body>
@@ -100,8 +110,8 @@
         </div>
         <div id="mobile-menu-wrap"></div>
         <div class="offcanvas__widget">
-            <span>Call us for any questions</span>
-            <h4>+01 123 456 789</h4>
+            <span>What do you think?</span>
+            <h4>07786 944 013</h4>
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -118,26 +128,15 @@
                 <div class="col-lg-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li><a href="./index.html">Home</a></li>
-                            <li><a href="./projects.html">Projects</a></li>
-                            <li><a href="./about.html">About</a></li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="./Project-details.html">Project Details</a></li>
-                                    <li><a href="./about.html">About</a></li>
-                                    <li><a href="./services.html">Services</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </li>
-                            <li class="active"><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li class="active"><a href="/">Home</a></li>
+                            <li><a href="https://github.com/JohnFF/edevtest">Codebase</a></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__widget">
-                        <span>Call us for any questions</span>
-                        <h4>+01 123 456 789</h4>
+                        <span>What do you think?</span>
+                        <h4>07786 944 013</h4>
                     </div>
                 </div>
             </div>
@@ -168,17 +167,20 @@
                                         <div class="col-lg-12">
                                             <p style="color: #000">Feedback</p> <textarea id="feedback_field" value="{{ user.feedback }}"></textarea>
                                             <p style="color: #000">Rating</p> <input id="rating_field" type="range" min="1" max="10" value="{{ user.rating }}" class="slider"><br/><br/>
-                                            <button id="save_button" style="bg-color: #000" type="submit" class="site-btn">Submit Feedback</button><span id="sign_in_feedback"></span>
+                                            <button id="save_button" style="bg-color: #000" type="submit" class="site-btn">Submit Feedback</button><p id="sign_in_feedback"></p>
                                         </div>
                                     </div>
                                 </form>
                                 <br/>
                                 <form action="#">
-                                    <button type="submit" id="sign_out_button" class="site-btn">Sign Out</button><span id="sign_out_feedback"></span>
-                                    <button type="submit" id="close_account_button" class="site-btn">Close Account</button><span id="close_account_feedback"></span>
+                                    <button type="submit" id="sign_out_button" class="site-btn">Sign Out</button><p id="sign_out_feedback"></p>
+                                    <br/>
+                                    <br/>
+                                    <p>Re-enter password to close account.</p>
+                                    <input id="password_field" type="text"></input>
+                                    <button type="submit" id="close_account_button" class="site-btn">Close Account</button><p id="close_account_feedback"></p>
                                 </form>
                             </div>
-                            Password <input id="password_field" type="text"></input>
                         </div>
                     </div>
                 </div>
