@@ -24,11 +24,7 @@ class Update extends AbstractController
                 session_start();
             }
 
-            if (!array_key_exists('logged_in', $_SESSION)) {
-                throw new Exception('Not logged in!');
-            }
-
-            if (!array_key_exists('username', $_SESSION['user']) ) {
+            if (!array_key_exists('user', $_SESSION) ) {
                 throw new Exception('Not logged in!');
             }
 

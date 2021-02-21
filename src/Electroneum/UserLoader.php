@@ -72,7 +72,7 @@ class UserLoader {
         {
             session_start();
         }
-        $_SESSION['logged_in'] = true;
+
         $_SESSION['user'] = self::load_user_with_password($username, $password)->getPublicValues();
     }
 
