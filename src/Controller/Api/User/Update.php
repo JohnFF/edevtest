@@ -19,7 +19,10 @@ class Update extends AbstractController
     public function update(): Response
     {
         try {
-            session_start();
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
 
             if (!array_key_exists('logged_in', $_SESSION)) {
                 throw new Exception('Not logged in!');
@@ -33,12 +36,11 @@ class Update extends AbstractController
 
             Validator::verify_username_valid($username);
 
-            $userLoader = new UserLoader();
-
             $feedback = $_POST["feedback"];
             $firstName = $_POST["first_name"];
             $rating = $_POST["rating"];
 
+            $userLoader = new UserLoader();
             $user = $userLoader->load_user($username);
             $user->update($feedback, $firstName, $rating);
             return new Response(json_encode('Updated'), self::SUCCESS_CODE);
