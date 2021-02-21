@@ -9,10 +9,10 @@ use Exception;
  */
 abstract class Validator {
 
-    const VALID_USERNAME_REGEX = "/^[A-Za-z0-9]*$/";
+    const VALID_USERNAME_REGEX = "^[A-Za-z0-9]*$";
     const MAX_USERNAME_LENGTH = 20;
 
-    const VALID_PASSWORD_REGEX = '/(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[*.!@$%^&(){}\[\]:;<>,.?~_\+\-=|]).*$/';
+    const VALID_PASSWORD_REGEX = '(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[*.!@$%^&(){}\[\]:;<>,.?~_\+\-=|]).*$'; // No start and end slashes for jQuery.
     const MIN_PASSWORD_LENGTH = 6;
     const MAX_PASSWORD_LENGTH = 30;
 
@@ -44,7 +44,7 @@ abstract class Validator {
         }
 
         // Only valid characters.
-        if (false == preg_match(self::VALID_USERNAME_REGEX, $input)) {
+        if (false == preg_match('/' . self::VALID_USERNAME_REGEX . '/', $input)) {
             throw new Exception('Username fails regex.');
         }
     }
@@ -74,7 +74,7 @@ abstract class Validator {
         }
 
         // Only valid characters.
-        if (false == preg_match(self::VALID_PASSWORD_REGEX, $input)) {
+        if (false == preg_match('/' . self::VALID_PASSWORD_REGEX .'/', $input)) {
             throw new Exception('Password fails regex.');
         }
     }
