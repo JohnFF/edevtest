@@ -32,3 +32,8 @@ The other alterntive would be to use AJAX queries, but this is highly ineffiecie
 14. For the time being, don't provide feedback to the user if the user is already taken. This could be easily added as a feature.
 
 15. Added prevention to script injection attacks.
+
+16. Forced to use "form" element even though this mandates returning false at the end of submissions because so much themeing based on form element.
+
+17. Normally the rule with API classes is to pass them instantly to a class to handle the function. In this case, that would be the only remaining 
+justification for Authenticator's existence, so it's best removed for Occam's razor.
