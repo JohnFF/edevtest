@@ -31,15 +31,12 @@ class UserLoader {
         $rawStoredUserDetails = file_get_contents(UserFactory::STORAGE_FILEPATH . $username . UserFactory::STORAGE_FILETYPE);
         $storedUserDetails = json_decode($rawStoredUserDetails, true);
 
-        if (!password_verify($password, $storedUserDetails['password_hash'])) {
-            throw new Exception('Incorrect password.');
-        }
-
         return new User(
             $storedUserDetails['first_name'],
             $storedUserDetails['username'],
             $storedUserDetails['feedback'],
-            $storedUserDetails['rating']
+            $storedUserDetails['rating'],
+            $storedUserDetails['password_hash']
         );
     }
 
@@ -50,7 +47,30 @@ class UserLoader {
      * @return User
      */
     public static function load_user_with_password($username, $password): User {
-        return self::load_user($username);
+
+        // Verify the username each time before it's loaded to prevent file
+        // traversal attempts.
+        Validator::verify_username_valid($username);
+
+        // Do not check the password is valid upon load unless we subsequently
+        // change password standards.
+
+        // Reference the file formats in UserFactory so as not to have to update
+        // them in two places.
+        $rawStoredUserDetails = file_get_contents(UserFactory::STORAGE_FILEPATH . $username . UserFactory::STORAGE_FILETYPE);
+        $storedUserDetails = json_decode($rawStoredUserDetails, true);
+
+        if (!password_verify($password, $storedUserDetails['password_hash'])) {
+            throw new Exception('Incorrect password.');
+        }
+
+        return new User(
+            $storedUserDetails['first_name'],
+            $storedUserDetails['username'],
+            $storedUserDetails['feedback'],
+            $storedUserDetails['rating'],
+            $storedUserDetails['password_hash']
+        );
     }
 
     /**

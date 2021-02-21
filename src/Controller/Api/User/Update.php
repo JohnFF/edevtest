@@ -3,6 +3,7 @@
 namespace App\Controller\Api\User;
 
 use App\Electroneum\UserLoader;
+use App\Electroneum\Validator;
 use App\Entity\User;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,16 +16,19 @@ class Update extends AbstractController
     
     public function update(): Response
     {
+        if (!array_key_exists('user', $_SESSION)) {
+            throw new Exception('Not logged in!');
+        }
+
         if (!array_key_exists('username', $_SESSION['user']) ) {
             throw new Exception('Not logged in!');
         }
-        if ($_POST['username'] != $_SESSION['user']['username']) {
-            throw new Exception('Trying to update a different user');
-        }
+
+        $username = $_SESSION['user']['username'];
+
+        Validator::verify_username_valid($username);
 
         $userLoader = new UserLoader();
-
-        $username = $_POST["username"];
 
         $feedback = $_POST["feedback"];
         $firstName = $_POST["first_name"];

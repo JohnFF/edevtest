@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Electroneum\Validator;
+use App\Electroneum\UserFactory;
 
 /**
  * Represents the user entity.
@@ -26,6 +27,7 @@ class User {
      * @param string $userName
      * @param string $feedback
      * @param string $rating
+     * @param string $passwordHash
      */
     public function __construct($firstName, $userName, $feedback, $rating, $passwordHash) {
         $this->feedback = $feedback;
@@ -66,7 +68,7 @@ class User {
             'password_hash' => $this->passwordHash,
             'rating' => $this->rating,
         ];
-        file_put_contents(self::STORAGE_FILEPATH . $this->username . self::STORAGE_FILETYPE, json_encode($userDetails));
+        file_put_contents(UserFactory::STORAGE_FILEPATH . $this->username . UserFactory::STORAGE_FILETYPE, json_encode($userDetails));
     }
 
     /**
