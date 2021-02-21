@@ -7,6 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Dashboard extends AbstractController
 {
+    /**
+     * Main router for the dashboard.
+     *
+     * @return Response
+     */
     public function show(): Response
     {
         session_start();
@@ -19,7 +24,9 @@ class Dashboard extends AbstractController
 
         return $this->render('pages/dashboard.html.twig', [
             'user' => [
+                'feedback' => $_SESSION['user']['feedback'],
                 'first_name' => $_SESSION['user']['first_name'],
+                'rating' => $_SESSION['user']['rating'],
                 'username' => $_SESSION['user']['username'],
             ],
         ]);

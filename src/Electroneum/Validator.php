@@ -72,4 +72,28 @@ abstract class Validator {
         }
     }
 
+    /**
+     *
+     * @param string $feedback
+     */
+    public static function verify_feedback_valid($feedback) {
+        
+    }
+
+    /**
+     *
+     * @param string $firstName
+     */
+    public static function verify_feedback_first_name($firstName) {
+
+    }
+
+    /**
+     *
+     * @param int $rating
+     */
+    public static function verify_feedback_rating($rating) {
+        
+    }
+
 }

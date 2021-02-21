@@ -14,8 +14,11 @@ class UserLoader {
      * Loads the user from the provided credentials
      *
      * @param string $username
+     * @param string $password
+     * @return User
      */
-    public static function load_user($username, $password): User {
+
+    public static function load_user($username): User {
 
         // Verify the username each time before it's loaded to prevent file
         // traversal attempts.
@@ -29,6 +32,25 @@ class UserLoader {
         $rawStoredUserDetails = file_get_contents(UserFactory::STORAGE_FILEPATH . $username . UserFactory::STORAGE_FILETYPE);
         $storedUserDetails = json_decode($rawStoredUserDetails, true);
 
+        return new User(
+            $storedUserDetails['first_name'],
+            $storedUserDetails['username'],
+            $storedUserDetails['feedback'],
+            $storedUserDetails['rating'],
+            $storedUserDetails['password_hash']
+        );
+    }
+
+    /**
+     *
+     * @param string $username
+     * @param string $password
+     * @return User
+     */
+    public static function load_user_with_password($username, $password): User {
+
+        $storedUserDetails = self::load_user($username);
+
         if (!password_verify($password, $storedUserDetails['password_hash'])) {
             throw new Exception('Incorrect password.');
         }
@@ -36,9 +58,11 @@ class UserLoader {
 
         return new User(
             $storedUserDetails['first_name'],
-            $storedUserDetails['username']
+            $storedUserDetails['username'],
+            $storedUserDetails['feedback'],
+            $storedUserDetails['rating'],
+            $storedUserDetails['password_hash']
         );
-
     }
 
     /**
@@ -52,7 +76,7 @@ class UserLoader {
         {
             session_start();
         }
-        $_SESSION['user'] = self::load_user($username, $password)->toArray();
+        $_SESSION['user'] = self::load_user_with_password($username, $password)->getPublicValues();
     }
 
 }
