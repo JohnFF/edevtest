@@ -40,9 +40,14 @@ class UserFactory {
             'rating' => User::DEFAULT_RATING,
         ];
 
-        // TODO check file doesn't exist first.
+        $candidateFilename = self::STORAGE_FILEPATH . $username . self::STORAGE_FILETYPE;
 
-        file_put_contents(self::STORAGE_FILEPATH . $username . self::STORAGE_FILETYPE, json_encode($userDetails));
+        // If the file already exists, then that username is already taken.
+        if (file_exists($password)) {
+            throw new Exception('File already exists.');
+        }
+
+        file_put_contents($candidateFilename, json_encode($userDetails));
     }
     
     /**
