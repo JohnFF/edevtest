@@ -1,5 +1,26 @@
-<html>
-    <head>
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Staging Template">
+    <meta name="keywords" content="Staging, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Staging | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aldrich&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             $(document).ready(function(){
@@ -46,17 +67,143 @@
                 });
             });
         </script>
-    </head>
+</head>
+
 <body>
-    Account name: {{ user.username }}<br/><br/>
-    Hello {{ user.first_name }}!<br/><br/>
-    First name: <input id="first_name_field" type="textbox" value="{{ user.first_name }}"></input><br/><br/>
-    Rating <input id="rating_field" type="range" min="1" max="10" value="{{ user.rating }}" class="slider"><br/><br/>
-    Feedback <input id="feedback_field" style="line-height: 100px" type="textarea" value="{{ user.feedback }}"></input>?<br/><br/>
-    <input id="save_button" type="button" value="Save changes"></type>
-    <div id="sign_in_feedback"></div>
-    <input id="sign_out_button" type="button" value="Sign Out"></type>
-    <input id="close_account_button" type="button" value="Close Account"></type>
-Password <input id="password_field" type="text"></input>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__logo">
+            <a href="#"><img src="img/logo.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__widget">
+            <span>Call us for any questions</span>
+            <h4>+01 123 456 789</h4>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header header-normal set-bg" data-setbg="img/little-header.jpg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="#"><img src="img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a href="./index.html">Home</a></li>
+                            <li><a href="./projects.html">Projects</a></li>
+                            <li><a href="./about.html">About</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul class="dropdown">
+                                    <li><a href="./Project-details.html">Project Details</a></li>
+                                    <li><a href="./about.html">About</a></li>
+                                    <li><a href="./services.html">Services</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li class="active"><a href="./blog.html">Blog</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__widget">
+                        <span>Call us for any questions</span>
+                        <h4>+01 123 456 789</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Blog Details Section Begin -->
+    <section class="blog-details spad">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-10">
+                    <div class="blog__details__content">
+                        <div class="blog__details__title">
+                            <ul>
+                                <li>Account name: {{ user.username }}</li>
+                            </ul>
+                            <h2>Hello {{ user.first_name }}!</h2>
+                            <div class="blog__details__comment__form">
+                                <h4>Leave Feedback</h4>
+                                <form action="#">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4">
+                                            <p style="color: #000">First name</p>
+                                            <input id="first_name_field" type="text" value="{{ user.first_name }}">
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <p style="color: #000">Feedback</p> <textarea id="feedback_field" value="{{ user.feedback }}"></textarea>
+                                            <p style="color: #000">Rating</p> <input id="rating_field" type="range" min="1" max="10" value="{{ user.rating }}" class="slider"><br/><br/>
+                                            <button id="save_button" type="submit" class="site-btn">Submit Feedback</button><span id="sign_in_feedback"></span>
+                                        </div>
+                                    </div>
+                                </form>
+                                <br/>
+                                <form action="#">
+                                    <button type="submit" id="sign_out_button" class="site-btn">Sign Out</button>
+                                    <button type="submit" id="close_account_button" class="site-btn">Close Account</button>
+                                </form>
+                            </div>
+                            Password <input id="password_field" type="text"></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Details Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer style="padding: 0px" class="footer set-bg" data-setbg="img/footer-bg.jpg">
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-lg-8 col-md-7">
+                        <div class="copyright__text">
+                            <p>Copyright © <script>
+                                document.write(new Date().getFullYear());
+                            </script> All rights reserved | This template is made with <i class="fa fa-heart-o"
+                            aria-hidden="true"></i> by <a href="https://colorlib.com"
+                            target="_blank">Colorlib</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5">
+                    <div class="copyright__widget">
+                        <a href="#">Terms of use</a>
+                        <a href="#">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/main.js"></script>
 </body>
+
 </html>
