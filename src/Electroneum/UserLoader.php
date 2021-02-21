@@ -54,7 +54,6 @@ class UserLoader {
         if (!password_verify($password, $storedUserDetails['password_hash'])) {
             throw new Exception('Incorrect password.');
         }
-        file_put_contents(UserFactory::STORAGE_FILEPATH . 'debug.txt', print_r($storedUserDetails, TRUE));
 
         return new User(
             $storedUserDetails['first_name'],
