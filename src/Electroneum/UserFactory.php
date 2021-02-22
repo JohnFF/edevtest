@@ -43,8 +43,8 @@ class UserFactory {
         $candidateFilename = self::STORAGE_FILEPATH . $username . self::STORAGE_FILETYPE;
 
         // If the file already exists, then that username is already taken.
-        if (file_exists($password)) {
-            throw new Exception('File already exists.');
+        if (file_exists($candidateFilename)) {
+            throw new Exception('Username already taken.');
         }
 
         file_put_contents($candidateFilename, json_encode($userDetails));
